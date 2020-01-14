@@ -1,15 +1,42 @@
 .bk-info {
-  background-color: #ccc;
+  margin: 4rem auto;
+  width: 90%;
+  font-family: "Raleway", sans-serif;
+  background: #f4f4f4;
+  display: flex;
+}
+
+.bk-info__cover-rating {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  width: 30%;
 }
 
 .bk-info__cover {
-  max-width: 80px;
+  max-width: 150px;
+  padding: 1rem;
 }
 
 .bk-info__rating {
+  padding: 1rem;
   text-align: center;
 }
 
+.bk-info__copy {
+  text-align: left;
+}
+
+.bk-info__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 70%;
+}
+
 .bk-info__ed-del {
+  align-self: center;
   text-align: center;
 } 
