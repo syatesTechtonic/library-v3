@@ -1,0 +1,15 @@
+.bk-info {
+  background-color: #ccc;
+}
+
+.bk-info__cover {
+  max-width: 80px;
+}
+
+.bk-info__rating {
+  text-align: center;
+}
+
+.bk-info__ed-del {
+  text-align: center;
+} 
