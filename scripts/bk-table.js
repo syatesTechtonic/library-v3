@@ -1,4 +1,4 @@
-let $row = $('.js-bk-title__row');
+let $row = $('.js-bk-title');
 let info   = '.js-bk-info';
 
 $(document).ready(function(){
@@ -6,7 +6,7 @@ $(document).ready(function(){
 });
 
 $row.click(function () {
-  $(this).next(info).children().first().toggleClass('bk-info--open');
+  $(this).next(info).children().first().addClass('bk-info--open');
   $(this).next(info).slideToggle();
   $(this).parent().siblings().children().next().slideUp();
   return false;
