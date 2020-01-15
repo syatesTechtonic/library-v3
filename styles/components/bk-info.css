@@ -1,17 +1,21 @@
 .bk-info {
-  margin: 4rem auto;
+  margin: auto;
+  padding: 0.5rem;
   width: 90%;
-  font-family: "Raleway", sans-serif;
   background: #f4f4f4;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+}
+
+.bk-info--open {
   display: flex;
 }
 
 .bk-info__cover-rating {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-  width: 30%;
+  margin: 0rem auto;
+  padding: 1rem;
+  text-align: center;
 }
 
 .bk-info__cover {
@@ -20,23 +24,29 @@
 }
 
 .bk-info__rating {
-  padding: 1rem;
-  text-align: center;
+  color: #51a1a1;
+  padding: 0.5rem;
 }
 
 .bk-info__copy {
+  height: 100%;
+  margin: 0rem auto;
+  padding: 1rem;
+  align-items: center;
   text-align: left;
 }
 
-.bk-info__content {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 70%;
+.bk-info__copy--bold {
+  font-weight: 700;
 }
 
-.bk-info__ed-del {
-  align-self: center;
+.bk-info__footer {
+  margin: 0.5rem auto;
   text-align: center;
 } 
+
+@media only screen and (min-width: 600px) {
+  .bk-info {
+    flex-direction: row;
+  }
+}
