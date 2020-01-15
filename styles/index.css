@@ -1,5 +1,12 @@
 @import './main.css';
-@import './components/buttons.css';
+@import './components/lb-buttons.css';
+@import './components/lb-navbar.css';
 @import './components/bk-table.css';
 @import './components/bk-title.css';
 @import './components/bk-info.css';
+
+.lb-container {
+  height: 100vh;
+  background: url('../assets/images/reading-room.jpg') no-repeat fixed center;
+  background-size: cover;
+}

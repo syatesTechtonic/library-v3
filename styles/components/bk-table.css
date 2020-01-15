@@ -1,7 +1,9 @@
 .bk-table {
   border: 1px solid rgb(33, 34, 80);
   max-width: 1000px;
-  margin: 4rem auto;
+  margin: 0rem auto;
+  position: relative;
+  top: 2rem;
   width: 90%;
   font-family: "Raleway", sans-serif;
   text-align: left;

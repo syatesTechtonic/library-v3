@@ -1,0 +1,16 @@
+.lb-navbar {
+  background: #efefef;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.lb-navbar__title {
+  padding: 0rem 1rem;
+  font-size: 1.8rem;
+}
+
+.lb-navbar__buttons {
+  padding: 0rem 1rem;
+}

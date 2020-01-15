@@ -1,0 +1,13 @@
+
+.lb-button {
+  background-image: linear-gradient( #888ec2,  #676ea5);
+  border: none;
+  border-radius: 15px;
+  color: white;
+  font-size: 0.9rem;
+  letter-spacing: 0.1rem;
+  text-transform: uppercase;
+  margin: 0.5rem;
+  padding: 0.5rem 0.8rem;
+  width: 100px;
+}
