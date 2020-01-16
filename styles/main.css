@@ -9,17 +9,35 @@ body {
 }
 
 p {
-  font-size: 1rem;
+  font-size: 0.8rem;
+  line-height: 1.5rem;
 }
-
 h1 {
-  font-size: 1.4rem;
-}
-
-h2 {
   font-size: 1.2rem;
 }
-
+h2 {
+  font-size: 1rem;
+}
 h3 {
-  font-size: 1.1rem;
+  font-size: 0.9rem;
+}
+
+p, h1, h2, h3 {
+  margin: 0rem;
+  padding: 0.6rem;
+}
+
+@media only screen and (min-width: 600px) {
+  p {
+    font-size: 1rem;
+  }
+  h1 {
+    font-size: 1.4rem;
+  }
+  h2 {
+    font-size: 1.2rem;
+  }
+  h3 {
+    font-size: 1.1rem;
+  }
 }

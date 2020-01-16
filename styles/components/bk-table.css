@@ -1,18 +1,21 @@
 .bk-table {
-  border: 1px solid rgb(33, 34, 80);
   max-width: 1000px;
   margin: 0rem auto;
   position: relative;
   top: 2rem;
+  height: 70%;
+  overflow: scroll;
   width: 90%;
   font-family: "Raleway", sans-serif;
   text-align: left;
-  background: #f4f4f4;
+  background-color: transparent;
 }
 
 .bk-table__header {
   display: flex;
-  padding: 0.2rem 2rem;
+  padding: 0.3rem 2rem;
+  border: 1px solid rgb(33, 34, 80);
+  border-bottom: none;
   background: rgb(56, 57, 114);
   color: white;
 }

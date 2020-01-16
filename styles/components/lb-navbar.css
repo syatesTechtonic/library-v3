@@ -8,9 +8,16 @@
 
 .lb-navbar__title {
   padding: 0rem 1rem;
-  font-size: 1.8rem;
+  font-size: 1.2rem;
 }
 
 .lb-navbar__buttons {
-  padding: 0rem 1rem;
+  padding: 0rem 0.5rem;
 }
+
+@media only screen and (min-width: 600px) {
+  .lb-navbar__title {
+    font-size: 1.8rem;
+  }
+}
+
