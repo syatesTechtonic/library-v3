@@ -40,7 +40,7 @@ const books = [
     imgAlt: "v-cover",
     pages: 492,
     pubDate: "5/16/1963",
-    synopsis: "In which Benny Profane, a schlemil and human yo-yo, gets to an apocheir",
+    synopsis: "In which Benny Profane, a schlemil and human yo-yo, gets to an apocheir.",
     rating: 4
   },
   {
@@ -51,7 +51,7 @@ const books = [
     imgAlt: "-cover",
     pages: 194,
     pubDate: "5/16/1965",
-    synopsis: "The highly original satire about Oedipa Maas, a woman who finds herself enmeshed in a worldwide conspiracy, meets some extremely interesting characters and attains a not inconsiderable amount of self-knowledge.",
+    synopsis: "Oedipa Maas finds herself enmeshed in a worldwide conspiracy, meets some extremely interesting characters and attains a not inconsiderable amount of self-knowledge.",
     rating: 4
   },
   {
@@ -82,11 +82,22 @@ function addBook (book) {
   $(infoId).append(`<div class="bk-info__cover-rating"></div><div class="bk-info__copy">`);
   $(infoId + ' div.bk-info__cover-rating').append(`<img src="${book.imgSrc}" alt="${book.imgAlt}" class="bk-info__cover"><div class="bk-info__rating">${stars(book.rating).map(star => `<span class="fa${star} fa-star"></span>`).join('')}</div>`);
   $(infoId + ' div.bk-info__copy').append(`<p><span class="bk-info__copy--bold">Publication Date: </span><time datetime="${new Date(book.pubDate)}">${book.pubDate}</time></p><p><span class="bk-info__copy--bold">Pages: </span>${book.pages}</p><p><span class="bk-info__copy--bold">Synopsis: </span>${book.synopsis}</p>`);
+  $(infoId + ' div.bk-info__copy').append(`<div class="bk-info__ed-del"><button id="bk-${book.id}-edit" class="lb-button">Edit</button><button id="bk-${book.id}-delete" class="lb-button">Delete</button></div>`);
+  attachHandlers(book.id);
 }
 
 function stars (rating) {
   const numArray = [1,2,3,4,5];
   return numArray.map(num => num <= rating ? 's' : 'r');
+}
+
+function attachHandlers (id) {
+  $('#bk-' + id + '-delete').bind("click", () => {
+    console.log('delete book id: ' + id)
+  });
+  $('#bk-' + id + '-edit').bind("click", () => {
+    console.log('edit book id: ' + id)
+  });
 }
 
 $(document).ready(() => onInit());
@@ -108,7 +119,7 @@ function checkBook (input, book) {
   return input.title && book.title.toLowerCase().includes(input.title.toLowerCase()) || input.author && book.author.toLowerCase().includes(input.author.toLowerCase());
 }
 
-$('#bookSearch').submit(function (e) {
+$('#bookSearch').submit(e => {
   e.preventDefault();
   const input = {
     title: $('[name="title"]').val() || '',

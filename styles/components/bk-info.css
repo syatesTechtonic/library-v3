@@ -35,10 +35,12 @@
 
 .bk-info__author {
   width: 35%;
+  margin: auto;
 }
 
 .bk-info__title {
   width: 65%;
+  margin: auto;
 }
 
 .bk-info__cover-rating {
@@ -68,9 +70,9 @@
   font-weight: 700;
 }
 
-.bk-info__footer {
+.bk-info__ed-del {
+  margin: 1rem;
   padding: 1rem;
-  text-align: center;
 } 
 
 @media only screen and (min-width: 600px) {
@@ -80,7 +82,7 @@
   .bk-info__header {
     padding: 0.2rem 2rem;
   }
-  .bk-info__copy {
+  .bk-info__copy p {
     text-align: left;
   }
   .bk-info__author {

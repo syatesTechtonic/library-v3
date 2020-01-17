@@ -7,7 +7,7 @@
   font-family: "Raleway", sans-serif;
   text-align: left;
   background-color: transparent;
-  max-height: 76%;
+  max-height: 64%;
   overflow: scroll;
 }
 
@@ -22,13 +22,18 @@
 
 .bk-table__author {
   width: 35%;
+  margin: auto;
 }
 
 .bk-table__title {
   width: 65%;
+  margin: auto;
 }
 
 @media only screen and (min-width: 600px) {
+  .bk-table {
+    max-height: 76%;
+  }
   .bk-table__header {
     padding: 0.3rem 2rem;
   }
