@@ -18,3 +18,9 @@ src="assets/images/covers/wocket-pocket.png" alt="wocket-pocket-cover"
 Publication Date: 8/12/1984
 Pages: 65
 Synopsis: A young boy goes exploring in his house and finds an array of fun characters! Are you certain there’s a Jertain in the curtain? Or have you ever had a feeling there’s a Geeling on the ceiling?
+
+
+      <div class="bk-info__footer">
+        <button class="lb-button">Edit</button>
+        <button class="lb-button">Delete</button>
+      </div>

@@ -1,8 +1,10 @@
 @import './main.css';
 @import './components/lb-buttons.css';
 @import './components/lb-navbar.css';
+@import './components/lb-form.css';
 @import './components/bk-table.css';
 @import './components/bk-info.css';
+@import './components/bk-nav.css';
 
 .lb-container {
   height: 100vh;
