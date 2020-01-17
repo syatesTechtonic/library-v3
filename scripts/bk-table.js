@@ -67,7 +67,7 @@ const books = [
   }
 ]
 
-function onInit () {
+function populateBooks () {
   books.map(book => addBook(book));
   document.getElementById('bookSearch').reset();
   return;
@@ -93,14 +93,19 @@ function stars (rating) {
 
 function attachHandlers (id) {
   $('#bk-' + id + '-delete').bind("click", () => {
-    console.log('delete book id: ' + id)
+    document.getElementById('bk-' + id + '-header').remove();
+    document.getElementById('bk-' + id + '-info').remove();
+    const bookIndex = books.findIndex(book => book.id === id);
+    books.splice(bookIndex, 1);
+    return id;
   });
   $('#bk-' + id + '-edit').bind("click", () => {
-    console.log('edit book id: ' + id)
+    console.log('edit book id: ' + id);
+    return id;
   });
 }
 
-$(document).ready(() => onInit());
+$(document).ready(() => populateBooks());
 
 function clickTitle (headerId, infoId) {
   if ($(headerId).hasClass('bk-info__header--selected')) {
@@ -132,5 +137,11 @@ $('#bookSearch').submit(e => {
     return;
   }
   console.log('no books matched your serach');
+  return;
+})
+
+$('#showAllBooks').bind('click', () => {
+  $('#bkTable').children().not('.bk-table__header').remove();
+  populateBooks();
   return;
 })
