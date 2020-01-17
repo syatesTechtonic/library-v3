@@ -32,10 +32,44 @@ const books = [
     synopsis: "A young boy goes exploring in his house and finds an array of fun characters! Are you certain there’s a Jertain in the curtain? Or have you ever had a feeling there’s a Geeling on the ceiling?",
     rating: 5
   },
+  {
+    id: "444ddd",
+    author: "Thomas Pynchon",
+    title: "V",
+    imgSrc: "assets/images/covers/v.jpg",
+    imgAlt: "v-cover",
+    pages: 492,
+    pubDate: "5/16/1963",
+    synopsis: "In which Benny Profane, a schlemil and human yo-yo, gets to an apocheir",
+    rating: 4
+  },
+  {
+    id: "555eee",
+    author: "Thomas Pynchon",
+    title: "The Crying of Lot 49",
+    imgSrc: "assets/images/covers/lot-49.jpg",
+    imgAlt: "-cover",
+    pages: 194,
+    pubDate: "5/16/1965",
+    synopsis: "The highly original satire about Oedipa Maas, a woman who finds herself enmeshed in a worldwide conspiracy, meets some extremely interesting characters and attains a not inconsiderable amount of self-knowledge.",
+    rating: 4
+  },
+  {
+    id: "666fff",
+    author: "Thomas Pynchon",
+    title: "Gravity's Rainbow",
+    imgSrc: "assets/images/covers/gravitys-rainbow.jpg",
+    imgAlt: "gravitys-rainbow-cover",
+    pages: 770,
+    pubDate: "5/16/1973",
+    synopsis: "A few months after the Germans’ secret V-2 rocket bombs begin falling on London, British Intelligence discovers that a map of the city pinpointing the sexual conquests of one Lieutenant Tyrone Slothrop, U.S. Army, corresponds identically to a map showing the V-2 impact sites.",
+    rating: 5
+  }
 ]
 
 function onInit () {
   books.map(book => addBook(book));
+  document.getElementById('bookSearch').reset();
   return;
 }
 
@@ -60,6 +94,7 @@ $(document).ready(() => onInit());
 function clickTitle (headerId, infoId) {
   if ($(headerId).hasClass('bk-info__header--selected')) {
     $(infoId).addClass('bk-info--open').slideUp();
+    $(headerId).removeClass('bk-info__header--selected');
     return;
   }
   $(headerId).addClass('bk-info__header--selected');
@@ -70,7 +105,7 @@ function clickTitle (headerId, infoId) {
 }
 
 function checkBook (input, book) {
-  return input.title && book.title.toLowerCase().includes(input.title.toLowerCase()) || input.author && book.author.toLowerCase().includes(input.author.toLowerCase()) ? true : false;
+  return input.title && book.title.toLowerCase().includes(input.title.toLowerCase()) || input.author && book.author.toLowerCase().includes(input.author.toLowerCase());
 }
 
 $('#bookSearch').submit(function (e) {
@@ -79,7 +114,12 @@ $('#bookSearch').submit(function (e) {
     title: $('[name="title"]').val() || '',
     author: $('[name="author"]').val() || ''
   }
-  const results = books.filter(book => checkBook(input, book))
-  console.log(results);
-  return results;
+  const results = books.filter(book => checkBook(input, book));
+  if (results) {
+    $('#bkTable').children().not('.bk-table__header').remove();
+    results.map(book => addBook(book))
+    return;
+  }
+  console.log('no books matched your serach');
+  return;
 })
