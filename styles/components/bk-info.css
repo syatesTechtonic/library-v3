@@ -5,12 +5,12 @@
   margin: auto;
   padding: 0.5rem;
   display: none;
-  flex-direction: column;
-  align-items: center;
 }
 
 .bk-info--open {
   display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .bk-info__header {
@@ -34,11 +34,13 @@
 }
 
 .bk-info__author {
+  font-size: 0.9rem;
   width: 35%;
   margin: auto;
 }
 
 .bk-info__title {
+  font-size: 0.9rem;
   width: 65%;
   margin: auto;
 }
@@ -79,10 +81,19 @@
   font-weight: 700;
 }
 
-.bk-info__ed-del {
+.bk-info__buttons {
   margin: 1rem;
   padding: 1rem;
 } 
+
+.bk-info__author, .bk-info__title, .bk-info__pubDate, .bk-info__pages, .bk-info__synopsis {
+  border: none;
+  background: none;
+  display: inline;
+  font-family: inherit;
+  font-size: inherit;
+  padding: 0.5rem;
+}
 
 @media only screen and (min-width: 600px) {
   .bk-info {
@@ -95,10 +106,12 @@
     align-items: left;
     text-align: left;
   }
-  .bk-info__author, .bk-info__author--edit {
+  .bk-info__author {
+    font-size: 1.1rem;
     width: 25%;
   }
-  .bk-info__title, .bk-info__title--edit {
+  .bk-info__title {
+    font-size: 1.1rem;
     width: 75%;
   }
 }
