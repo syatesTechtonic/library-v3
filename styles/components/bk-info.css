@@ -55,13 +55,22 @@
 }
 
 .bk-info__rating {
-  color: #51a1a1;
   padding: 0.5rem;
+}
+
+.bk-info__star {
+  color: lightgray;
+}
+
+.bk-info__star--checked {
+  color: rgb(96, 106, 192);
 }
 
 .bk-info__copy {
   margin: 0rem auto;
   padding: 1rem;
+  display: flex;
+  flex-direction: column;
   align-items: center;
   text-align: center;
 }
@@ -82,13 +91,14 @@
   .bk-info__header {
     padding: 0.2rem 2rem;
   }
-  .bk-info__copy p {
+  .bk-info__copy {
+    align-items: left;
     text-align: left;
   }
-  .bk-info__author {
+  .bk-info__author, .bk-info__author--edit {
     width: 25%;
   }
-  .bk-info__title {
+  .bk-info__title, .bk-info__title--edit {
     width: 75%;
   }
 }
