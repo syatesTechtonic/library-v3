@@ -63,40 +63,40 @@ const books = [
     id: "777ggg",
     author: "John Le Carré",
     title: "Tinker, Tailor, Soldier, Spy",
-    imgSrc: "assets/images/covers/gravitys-rainbow.jpg",
-    pubDate: "1973-05-16",
-    pages: 770,
-    synopsis: "A few months after the Germans’ secret V-2 rocket bombs begin falling on London, British Intelligence discovers that a map of the city pinpointing the sexual conquests of one Lieutenant Tyrone Slothrop, U.S. Army, corresponds identically to a map showing the V-2 impact sites.",
+    imgSrc: "assets/images/covers/tinker-tailor.jpg",
+    pubDate: "1974-06-16",
+    pages: 401,
+    synopsis: "British Secret Service Agent George Smiley has a world-class problem. He has discovered a mole--a Soviet double agent who has managed to burrow his way up to the highest level of British Intelligence.",
     rating: 5
   },
   {
     id: "888hhh",
     author: "John Le Carré",
     title: "The Honourable Schoolboy",
-    imgSrc: "assets/images/covers/gravitys-rainbow.jpg",
-    pubDate: "1973-05-16",
-    pages: 770,
-    synopsis: "A few months after the Germans’ secret V-2 rocket bombs begin falling on London, British Intelligence discovers that a map of the city pinpointing the sexual conquests of one Lieutenant Tyrone Slothrop, U.S. Army, corresponds identically to a map showing the V-2 impact sites.",
+    imgSrc: "assets/images/covers/honourable-schoolboy.jpg",
+    pubDate: "1977-05-16",
+    pages: 611,
+    synopsis: "The mole has been eliminated, but the damage wrought has brought the British Secret Service to its knees. Given the charge of the gravely compromised Circus, George Smiley embarks on a campaign to uncover what Moscow Centre most wants to hide.",
     rating: 5
   },
   {
     id: "999iii",
-    author: "Thomas Pynchon",
-    title: "Gravity's Rainbow",
-    imgSrc: "assets/images/covers/gravitys-rainbow.jpg",
-    pubDate: "1973-05-16",
-    pages: 770,
-    synopsis: "A few months after the Germans’ secret V-2 rocket bombs begin falling on London, British Intelligence discovers that a map of the city pinpointing the sexual conquests of one Lieutenant Tyrone Slothrop, U.S. Army, corresponds identically to a map showing the V-2 impact sites.",
+    author: "John Le Carré",
+    title: "Smiley's People",
+    imgSrc: "assets/images/covers/smileys-people.jpg",
+    pubDate: "1979-11-16",
+    pages: 468,
+    synopsis: "A very junior agent answers Vladimir’s call, but it could have been the Chief of the Circus himself. No one at the British Secret Service considers the old spy to be anything except a senile has-been who can’t give up the game—until he’s shot in the face at point-blank range.",
     rating: 5
   },
   {
     id: "101010jjj",
-    author: "Thomas Pynchon",
-    title: "Gravity's Rainbow",
-    imgSrc: "assets/images/covers/gravitys-rainbow.jpg",
-    pubDate: "1973-05-16",
-    pages: 770,
-    synopsis: "A few months after the Germans’ secret V-2 rocket bombs begin falling on London, British Intelligence discovers that a map of the city pinpointing the sexual conquests of one Lieutenant Tyrone Slothrop, U.S. Army, corresponds identically to a map showing the V-2 impact sites.",
+    author: "Karl Marx",
+    title: "Das Kapital",
+    imgSrc: "assets/images/covers/das-kapital.jpg",
+    pubDate: "1867-09-14",
+    pages: 908,
+    synopsis: "A critical analysis of political economy, meant to reveal the contradictions of the capitalist mode of production, how it was the precursor of the socialist mode of production and of the class struggle rooted in the capitalist social relations of production.",
     rating: 5
   }
 ]
@@ -112,42 +112,87 @@ const newBook = {
   rating: 0
 }
 
-function populateBooks () {
-  books.reverse().map(book => addBook(book));
+function populateBooks (bookArray) {
+  document.getElementById('bkTableBody').innerHTML = bookArray.map(book => addBook(book)).join('');
+  bookArray.map(book => attachHandlers(book.id));
   document.getElementById('bookSearch').reset();
   return;
 }
 
 function addBook (book) {
   const { id, author, title, imgSrc, pubDate, pages, synopsis, rating } = book;
-  const template = document.querySelector('#js-bk');
-  const clone = template.content.cloneNode(true);
-  const form = clone.querySelector('.js-bk-form');
-  form.id = id + '-form';
-  const header = clone.querySelector('.bk-info__header');
-  header.id = id + '-header';
-  const info = clone.querySelector('.bk-info');
-  info.id = id + '-info';
-  const authorHead = clone.querySelector('.bk-info__author');
-  authorHead.value = author;
-  const titleHead = clone.querySelector('.bk-info__title');
-  titleHead.value = title;
-  const img = clone.querySelector('img');
-  img.alt = title;
-  img.src = imgSrc ? imgSrc : img.src;
-  const stars = clone.querySelectorAll('.bk-info__star');
-  const pubDateInput = clone.querySelector('.bk-info__pubDate');
-  pubDateInput.value = pubDate;
-  const pagesInput = clone.querySelector('.bk-info__pages');
-  pagesInput.value = pages;
-  const synopsisInput = clone.querySelector('.bk-info__synopsis');
-  synopsisInput.value = synopsis;
-  const editBtn = clone.querySelector('.js-edit');
-  editBtn.id = id + '-edit';
-  const deleteBtn = clone.querySelector('.js-delete');
-  deleteBtn.id = id + '-delete';
-  $('#bkTableBody').prepend(clone);
-  attachHandlers(id);
+  return `<section id="${id}-book" class="js-bk">
+    <header id="${id}-header" class="bk-info__header js-bk-header">
+      <h3 class="bk-info__author">${author}</h3>
+      <h3 class="bk-info__title">${title}</h3>
+      <span class="fas fa-caret-down bk-info__carat"></span>
+    </header>
+    <article id="${id}-info" class="bk-info js-bk-info">
+      <div class="bk-info__cover-rating">
+        <img src="${imgSrc ? imgSrc : 'assets/images/covers/no-cover.png'}" alt="${title}" class="bk-info__cover">
+        <div class="bk-info__rating">
+          <span data-star="1" class="fas fa-star bk-info__star${rating >= 1 ? ' bk-info__star--checked' : ''}"></span>
+          <span data-star="2" class="fas fa-star bk-info__star${rating >= 2 ? ' bk-info__star--checked' : ''}"></span>
+          <span data-star="3" class="fas fa-star bk-info__star${rating >= 3 ? ' bk-info__star--checked' : ''}"></span>
+          <span data-star="4" class="fas fa-star bk-info__star${rating >= 4 ? ' bk-info__star--checked' : ''}"></span>
+          <span data-star="5" class="fas fa-star bk-info__star${rating >= 5 ? ' bk-info__star--checked' : ''}"></span>
+        </div>
+      </div>
+      <div class="bk-info__copy">
+        <p><span class="bk-info__copy--bold">Publication Date: </span>${pubDate}</p>
+        <p><span class="bk-info__copy--bold">Pages: </span>${pages}</p>
+        <p><span class="bk-info__copy--bold">Synopsis: </span>${synopsis}</p>
+        <div class="bk-info__buttons">
+          <button id="${id}-edit" class="lb-button js-edit">Edit</button>
+          <button id="${id}-delete" class="lb-button js-delete">Delete</button>
+        </div>
+      </div>
+    </article>
+  </section>`
+}
+
+function editBook (id) {
+  const bookToEdit = books.find(book => book.id === id);
+  const { author, title, imgSrc, pubDate, pages, synopsis, rating } = bookToEdit;
+  const formDisplay = document.createElement('form');
+  formDisplay.id = id + '-form';
+  formDisplay.classList.add('js-bk-form');
+  formDisplay.innerHTML = `<header id="${id}-header" class="bk-info__header js-bk-header">
+    <div>
+      <label for="author">Author:</label>
+      <input name="author" class="bk-info__author" value="${author}"/>
+    </div>
+    <div>
+      <label for="author">Author:</label>
+      <input name="title" class="bk-info__title" value="${title}"/>
+    </div>
+  </header>
+  <article class="bk-info bk-info--open js-bk-info">
+    <div class="bk-info__cover-rating">
+      <img src="${imgSrc ? imgSrc : 'assets/images/covers/no-cover.png'}" alt="${title}" class="bk-info__cover">
+      <div class="bk-info__rating">
+        <span data-star="1" class="fas fa-star bk-info__star${rating >= 1 ? ' bk-info__star--checked' : ''}"></span>
+        <span data-star="2" class="fas fa-star bk-info__star${rating >= 2 ? ' bk-info__star--checked' : ''}"></span>
+        <span data-star="3" class="fas fa-star bk-info__star${rating >= 3 ? ' bk-info__star--checked' : ''}"></span>
+        <span data-star="4" class="fas fa-star bk-info__star${rating >= 4 ? ' bk-info__star--checked' : ''}"></span>
+        <span data-star="5" class="fas fa-star bk-info__star${rating >= 5 ? ' bk-info__star--checked' : ''}"></span>
+      </div>
+    </div>
+    <div class="bk-info__copy">
+      <label for="pubDate" class="bk-info__copy--bold">Publication Date: </label>
+      <input name="pubDate" type="date" class="bk-info__pubDate" value="${pubDate}"/>
+      <label for="pages" class="bk-info__copy--bold">Pages: </label>
+      <input name="pages" type="number" class="bk-info__pages" value="${pages}"/>
+      <label for="synopsis" class="bk-info__copy--bold">Synopsis: </label>
+      <input name="synopsis" type="text" class="bk-info__synopsis" value="${synopsis}"/>
+      <div class="bk-info__buttons">
+        <button id="${id}-save" class="lb-button js-save">Save</button>
+        <button id="${id}-cancel" class="lb-button js-cancel">Cancel</button>
+      </div>
+    </div>
+  </article>`;
+  const readDisplay = document.getElementById(id + '-book');
+  readDisplay.replaceWith(formDisplay);
 }
 
 function attachHandlers (id) {
@@ -158,9 +203,11 @@ function attachHandlers (id) {
     if ($(headerId).hasClass('bk-info__header--selected')) {
       $(infoId).slideUp();
       $(headerId).removeClass('bk-info__header--selected');
+      $(headerId).children('span').removeClass('bk-info__carat--selected');
       return;
     } else {
       $(headerId).addClass('bk-info__header--selected');
+      $(headerId).children('span').addClass('bk-info__carat--selected');
       $('#bkTable').children('.js-bk-header').not(headerId).removeClass('bk-info__header--selected');
       $(infoId).hide().addClass('bk-info--open').slideDown();
       $('#bkTable').children('.js-bk-info').not(infoId).removeClass('bk-info--open').slideUp();
@@ -176,7 +223,7 @@ function attachHandlers (id) {
   });
   $('#' + id + '-edit').bind("click", (e) => {
     e.preventDefault();
-    $('#' + id + '-form').find('input').attr('disabled', 'false');
+    editBook(id);
     return;
   });
 }
@@ -190,14 +237,14 @@ function attachStarHandler (starId) {
   });
 }
 
-$(document).ready(() => populateBooks());
+$(document).ready(() => populateBooks(books));
 
 function checkBook (input, book) {
   return input.title && book.title.toLowerCase().includes(input.title.toLowerCase()) || input.author && book.author.toLowerCase().includes(input.author.toLowerCase());
 }
 
 function randomString() {
-  return Math.random().toString(36).substring(2, 15)
+  return Math.random().toString(36).substring(2, 15);
  }
 
 $('#bookSearch').submit(e => {
@@ -209,7 +256,7 @@ $('#bookSearch').submit(e => {
   const results = books.filter(book => checkBook(input, book));
   if (results) {
     $('#bkTableBody').children().remove();
-    results.map(book => addBook(book))
+    populateBooks(results);
     return;
   }
   console.log('no books matched your serach');
@@ -219,7 +266,7 @@ $('#bookSearch').submit(e => {
 $('#showAllBooks').bind('click', (e) => {
   e.preventDefault();
   $('#bkTableBody').children().remove();
-  populateBooks();
+  populateBooks(books);
   return;
 })
 

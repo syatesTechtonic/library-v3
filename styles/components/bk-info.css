@@ -45,6 +45,24 @@
   margin: auto;
 }
 
+.bk-info__carat {
+  font-size: 1.3rem;
+  margin: auto;
+  padding: 0.5rem 0rem;
+  -webkit-transition: 0.5s ease-in-out;
+  -moz-transition: 0.5s ease-in-out;
+  -o-transition: 0.5s ease-in-out;
+  transition: 0.5s ease-in-out;
+}
+
+.bk-info__carat--selected {
+  -webkit-transform: rotate(-180deg);
+  -moz-transform: rotate(-180deg);
+  -o-transform: rotate(-180deg);
+  -ms-transform: rotate(-180deg);
+  transform: rotate(-180deg);
+}
+
 .bk-info__cover-rating {
   margin: 0rem auto;
   padding: 1rem;
