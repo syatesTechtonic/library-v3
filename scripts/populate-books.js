@@ -7,8 +7,23 @@ const pagination = {
   perPage: 5
 }
 
+function paginate (page, perPage) {
+  return {
+    start: (page - 1) * perPage,
+    end: page * perPage
+  }
+}
+
+function turnThePage (change) {
+  pagination.page += change;
+  populateBooks(books);
+}
+
 function populateBooks (bookArray) {
-  document.getElementById('bkTableBody').innerHTML = bookArray.slice().map(book => makeBook(book)).join('');
+  const { page, perPage } = pagination;
+  const { start, end } = paginate(page, perPage);
+  console.log(start, end);
+  document.getElementById('bkTableBody').innerHTML = bookArray.slice(start, end).map(book => makeBook(book)).join('');
   bookArray.map(book => attachDisplayHandlers(book.id));
   document.getElementById('bookSearch').reset();
   return;
@@ -46,5 +61,16 @@ function attachDisplayHandlers (id) {
     return;
   });
 }
+
+$('#pageDown').bind('click', (e) => {
+  e.preventDefault();
+  turnThePage(-1);
+  return;
+})
+$('#pageUp').bind('click', (e) => {
+  e.preventDefault();
+  turnThePage(1);
+  return;
+})
 
 export default populateBooks;
