@@ -114,7 +114,7 @@ const newBook = {
 
 function populateBooks (bookArray) {
   document.getElementById('bkTableBody').innerHTML = bookArray.map(book => addBook(book)).join('');
-  bookArray.map(book => attachHandlers(book.id));
+  bookArray.map(book => attachDisplayHandlers(book.id));
   document.getElementById('bookSearch').reset();
   return;
 }
@@ -151,51 +151,7 @@ function addBook (book) {
   </section>`
 }
 
-function editBook (id) {
-  const bookToEdit = books.find(book => book.id === id);
-  const { author, title, imgSrc, pubDate, pages, synopsis, rating } = bookToEdit;
-  const formDisplay = document.createElement('form');
-  formDisplay.id = id + '-form';
-  formDisplay.classList.add('js-bk-form');
-  formDisplay.innerHTML = `<header id="${id}-header" class="bk-info__header js-bk-header">
-    <div>
-      <label for="author">Author:</label>
-      <input name="author" class="bk-info__author" value="${author}"/>
-    </div>
-    <div>
-      <label for="author">Author:</label>
-      <input name="title" class="bk-info__title" value="${title}"/>
-    </div>
-  </header>
-  <article class="bk-info bk-info--open js-bk-info">
-    <div class="bk-info__cover-rating">
-      <img src="${imgSrc ? imgSrc : 'assets/images/covers/no-cover.png'}" alt="${title}" class="bk-info__cover">
-      <div class="bk-info__rating">
-        <span data-star="1" class="fas fa-star bk-info__star${rating >= 1 ? ' bk-info__star--checked' : ''}"></span>
-        <span data-star="2" class="fas fa-star bk-info__star${rating >= 2 ? ' bk-info__star--checked' : ''}"></span>
-        <span data-star="3" class="fas fa-star bk-info__star${rating >= 3 ? ' bk-info__star--checked' : ''}"></span>
-        <span data-star="4" class="fas fa-star bk-info__star${rating >= 4 ? ' bk-info__star--checked' : ''}"></span>
-        <span data-star="5" class="fas fa-star bk-info__star${rating >= 5 ? ' bk-info__star--checked' : ''}"></span>
-      </div>
-    </div>
-    <div class="bk-info__copy">
-      <label for="pubDate" class="bk-info__copy--bold">Publication Date: </label>
-      <input name="pubDate" type="date" class="bk-info__pubDate" value="${pubDate}"/>
-      <label for="pages" class="bk-info__copy--bold">Pages: </label>
-      <input name="pages" type="number" class="bk-info__pages" value="${pages}"/>
-      <label for="synopsis" class="bk-info__copy--bold">Synopsis: </label>
-      <input name="synopsis" type="text" class="bk-info__synopsis" value="${synopsis}"/>
-      <div class="bk-info__buttons">
-        <button id="${id}-save" class="lb-button js-save">Save</button>
-        <button id="${id}-cancel" class="lb-button js-cancel">Cancel</button>
-      </div>
-    </div>
-  </article>`;
-  const readDisplay = document.getElementById(id + '-book');
-  readDisplay.replaceWith(formDisplay);
-}
-
-function attachHandlers (id) {
+function attachDisplayHandlers (id) {
   const headerId = '#' + id + '-header';
   const infoId = '#' + id + '-info';
   $('#' + id + '-header').bind("click", (e) => {
@@ -223,9 +179,76 @@ function attachHandlers (id) {
   });
   $('#' + id + '-edit').bind("click", (e) => {
     e.preventDefault();
-    editBook(id);
+    toggleEditBook(id);
     return;
   });
+}
+
+function toggleEditBook (id) {
+  const bookToEdit = books.find(book => book.id === id);
+  const { author, title, imgSrc, pubDate, pages, synopsis, rating } = bookToEdit;
+  const formDisplay = document.createElement('form');
+  formDisplay.id = id + '-form';
+  formDisplay.classList.add('js-bk-form');
+  formDisplay.addEventListener('submit', editBookSubmit);
+  formDisplay.innerHTML = `<header id="${id}-header" class="bk-info__header js-bk-header">
+    <div class="bk-edit__author">
+      <label for="author">Author:</label>
+      <input name="author" value="${author}"/>
+    </div>
+    <div class="bk-edit__title">
+      <label for="author">Title:</label>
+      <input name="title" value="${title}"/>
+    </div>
+  </header>
+  <article class="bk-info bk-info--open js-bk-info">
+    <div class="bk-info__cover-rating">
+      <img name="cover" src="${imgSrc ? imgSrc : 'assets/images/covers/no-cover.png'}" alt="${title}" class="bk-info__cover">
+      <div class="bk-info__rating">
+        <span data-star="1" class="fas fa-star bk-info__star${rating >= 1 ? ' bk-info__star--checked' : ''}"></span>
+        <span data-star="2" class="fas fa-star bk-info__star${rating >= 2 ? ' bk-info__star--checked' : ''}"></span>
+        <span data-star="3" class="fas fa-star bk-info__star${rating >= 3 ? ' bk-info__star--checked' : ''}"></span>
+        <span data-star="4" class="fas fa-star bk-info__star${rating >= 4 ? ' bk-info__star--checked' : ''}"></span>
+        <span data-star="5" class="fas fa-star bk-info__star${rating >= 5 ? ' bk-info__star--checked' : ''}"></span>
+      </div>
+    </div>
+    <div class="bk-info__copy">
+      <label for="pubDate" class="bk-info__copy--bold">Publication Date: </label>
+      <input name="pubDate" type="date" class="bk-edit__pubDate" value="${pubDate}"/>
+      <label for="pages" class="bk-info__copy--bold">Pages: </label>
+      <input name="pages" type="number" class="bk-edit__pages" value="${pages}"/>
+      <label for="synopsis" class="bk-info__copy--bold">Synopsis: </label>
+      <input name="synopsis" type="text" class="bk-edit__synopsis" value="${synopsis}"/>
+      <div class="bk-info__buttons">
+        <button id="${id}-save" type="submit" class="lb-button js-save">Save</button>
+        <button id="${id}-cancel" type="button" class="lb-button js-cancel">Cancel</button>
+      </div>
+    </div>
+  </article>`;
+  const readDisplay = document.getElementById(id + '-book');
+  readDisplay.replaceWith(formDisplay);
+  attachEditHandlers(id);
+}
+
+function attachEditHandlers (id) {
+  $('#' + id + '-cancel').bind("click", (e) => {
+    e.preventDefault();
+    populateBooks(books);
+    return;
+  });
+}
+
+function editBookSubmit (e) {
+  e.preventDefault();
+  const elements = e.target.elements;
+  const bookId = e.target.id.split('-')[0];
+  const book = books.find(book => book.id === bookId);
+  book.author = elements['author'].value;
+  book.title = elements['title'].value;
+  book.pubDate = elements['pubDate'].value;
+  book.pages = elements['pages'].value;
+  book.synopsis = elements['synopsis'].value;
+  populateBooks(books);
 }
 
 function attachStarHandler (starId) {

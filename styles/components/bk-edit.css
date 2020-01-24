@@ -1,0 +1,31 @@
+.bk-edit__author {
+  width: 35%;
+  margin: auto;
+}
+
+.bk-edit__title {
+  width: 65%;
+  margin: auto;
+}
+
+.bk-edit__pubDate {
+  width: 80%;
+}
+
+.bk-edit__pages {
+  width: 80%;
+}
+
+.bk-edit__synopsis {
+  width: 80%;
+  height: 20%;
+}
+
+@media only screen and (min-width: 600px) {
+  .bk-edit__author {
+    width: 40%;
+  }
+  .bk-edit__title {
+    width: 60%;
+  }
+}
