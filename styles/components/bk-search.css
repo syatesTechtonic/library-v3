@@ -27,8 +27,15 @@
   width: 1px;
 }
 
+.bk-search__input {
+  padding: 0.1rem 0.4rem;
+}
+
 @media only screen and (min-width: 600px) {
   .bk-search__form {
     flex-direction: row;
+  }
+  .bk-search__input {
+    padding: inherit;
   }
 }

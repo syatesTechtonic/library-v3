@@ -1,3 +1,8 @@
+const pagination = {
+  page: 1,
+  perPage: 5
+}
+
 const books = [
   {
     id: "111aaa",
@@ -101,19 +106,8 @@ const books = [
   }
 ]
 
-const newBook = {
-  id: "",
-  author: "Author",
-  title: "Title",
-  imgSrc: "assets/images/covers/no-cover.png",
-  pubDate: "",
-  pages: 0,
-  synopsis: "",
-  rating: 0
-}
-
 function populateBooks (bookArray) {
-  document.getElementById('bkTableBody').innerHTML = bookArray.map(book => addBook(book)).join('');
+  document.getElementById('bkTableBody').innerHTML = bookArray.slice().map(book => addBook(book)).join('');
   bookArray.map(book => attachDisplayHandlers(book.id));
   document.getElementById('bookSearch').reset();
   return;
@@ -201,7 +195,7 @@ function toggleEditBook (id) {
       <input name="title" value="${title}"/>
     </div>
   </header>
-  <article class="bk-info bk-info--open js-bk-info">
+  <article id="${id}-info" class="bk-info bk-info--open js-bk-info">
     <div class="bk-info__cover-rating">
       <img name="cover" src="${imgSrc ? imgSrc : 'assets/images/covers/no-cover.png'}" alt="${title}" class="bk-info__cover">
       <div class="bk-info__rating">
@@ -218,7 +212,7 @@ function toggleEditBook (id) {
       <label for="pages" class="bk-info__copy--bold">Pages: </label>
       <input name="pages" type="number" class="bk-edit__pages" value="${pages}"/>
       <label for="synopsis" class="bk-info__copy--bold">Synopsis: </label>
-      <input name="synopsis" type="text" class="bk-edit__synopsis" value="${synopsis}"/>
+      <textarea name="synopsis" type="text" class="bk-edit__synopsis">${synopsis}</textarea>
       <div class="bk-info__buttons">
         <button id="${id}-save" type="submit" class="lb-button js-save">Save</button>
         <button id="${id}-cancel" type="button" class="lb-button js-cancel">Cancel</button>
@@ -251,6 +245,76 @@ function editBookSubmit (e) {
   populateBooks(books);
 }
 
+function toggleAddBook () {
+  const id = randomString();
+  const formDisplay = document.createElement('form');
+  formDisplay.id = id + '-form';
+  formDisplay.classList.add('js-bk-form');
+  formDisplay.addEventListener('submit', addBookSubmit);
+  formDisplay.innerHTML = `<header id="${id}-header" class="bk-info__header js-bk-header">
+    <div class="bk-edit__author">
+      <label for="author">Author:</label>
+      <input name="author" value=""/>
+    </div>
+    <div class="bk-edit__title">
+      <label for="author">Title:</label>
+      <input name="title" value=""/>
+    </div>
+  </header>
+  <article id="${id}-info" class="bk-info js-bk-info">
+    <div class="bk-info__cover-rating">
+      <img name="cover" src="assets/images/covers/no-cover.png" alt="" class="bk-info__cover">
+      <div class="bk-info__rating">
+        <span data-star="1" class="fas fa-star bk-info__star"></span>
+        <span data-star="2" class="fas fa-star bk-info__star"></span>
+        <span data-star="3" class="fas fa-star bk-info__star"></span>
+        <span data-star="4" class="fas fa-star bk-info__star"></span>
+        <span data-star="5" class="fas fa-star bk-info__star"></span>
+      </div>
+    </div>
+    <div class="bk-info__copy">
+      <label for="pubDate" class="bk-info__copy--bold">Publication Date: </label>
+      <input name="pubDate" type="date" class="bk-edit__pubDate" value="1970-01-01"/>
+      <label for="pages" class="bk-info__copy--bold">Pages: </label>
+      <input name="pages" type="number" class="bk-edit__pages" value="0"/>
+      <label for="synopsis" class="bk-info__copy--bold">Synopsis: </label>
+      <textarea name="synopsis" type="text" class="bk-edit__synopsis"></textarea>
+      <div class="bk-info__buttons">
+        <button id="${id}-add" type="submit" class="lb-button js-add">Save</button>
+        <button id="${id}-cancel" type="button" class="lb-button js-cancel">Cancel</button>
+      </div>
+    </div>
+  </article>`;
+  const bkTableBody = document.getElementById('bkTableBody');
+  bkTableBody.prepend(formDisplay);
+  $('#' + id + '-header').addClass('bk-info__header--selected');
+  $('#bkTableBody').children('.js-bk-header').not('#' + id + '-header').removeClass('bk-info__header--selected');
+  $('#' + id + '-info').hide().addClass('bk-info--open').slideDown();
+  attachEditHandlers(id);
+}
+
+function attachAddHandlers (id) {
+  $('#' + id + '-cancel').bind("click", (e) => {
+    e.preventDefault();
+    populateBooks(books);
+    return;
+  });
+}
+
+function addBookSubmit (e) {
+  e.preventDefault();
+  const elements = e.target.elements;
+  const book = {
+    author: elements['author'].value,
+    title: elements['title'].value,
+    pubDate: elements['pubDate'].value,
+    pages: elements['pages'].value,
+    synopsis: elements['synopsis'].value
+  }
+  books.splice(0,0,book);
+  populateBooks(books);
+}
+
 function attachStarHandler (starId) {
   $(starId).bind("click", () => {
     $(starId).addClass('bk-info__star--checked');
@@ -268,7 +332,7 @@ function checkBook (input, book) {
 
 function randomString() {
   return Math.random().toString(36).substring(2, 15);
- }
+}
 
 $('#bookSearch').submit(e => {
   e.preventDefault();
@@ -295,13 +359,6 @@ $('#showAllBooks').bind('click', (e) => {
 
 $('#addBook').bind('click', (e) => {
   e.preventDefault();
-  newBook.id = randomString();
-  addBook(newBook);
-  $('#' + newBook.id + '-edit').remove(); 
-  $('#' + newBook.id + '-delete').remove();
-  $('#' + newBook.id + '-form').find('input').attr('disabled', 'false');
-  $('#' + newBook.id + '-header').addClass('bk-info__header--selected');
-  $('#bkTableBody').children('.js-bk-header').not('#' + newBook.id + '-header').removeClass('bk-info__header--selected');
-  $('#' + newBook.id + '-info').hide().addClass('bk-info--open').slideDown();
+  toggleAddBook();
   return;
 })
