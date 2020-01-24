@@ -5,6 +5,7 @@
     <title>La Biblioteca</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="./assets/images/books.png" type="image/png" />
     <link rel="stylesheet" href="./styles/index.css">
   </head>
   <body class="lb-container">
@@ -23,15 +24,16 @@
         <h2 class="bk-table__author">Author</h2>
         <h2 class="bk-table__title">Title</h2>
       </header>
+      <div id="bkTableBody"></div>
 
     </section>
 
     <footer class="bk-search">
       <form name="bookSearch" id="bookSearch" class="bk-search__form">
         <label for="title" class="bk-search__label">Title</label>
-        <input name="title" class="lb-form__input" type="text" placeholder="Title">
+        <input name="titleSearch" class="lb-form__input bk-search__input" type="text" placeholder="Title">
         <label for="author" class="bk-search__label">Author</label>
-        <input name="author" class="lb-form__input" type="text" placeholder="Author">
+        <input name="authorSearch" class="lb-form__input bk-search__input" type="text" placeholder="Author">
         <button type="submit" class="lb-button">Search</button>
       </form>
     </footer>
