@@ -8,6 +8,11 @@
   margin: auto;
 }
 
+.bk-edit__cover {
+  max-width: 150px;
+  padding: 1rem;
+}
+
 .bk-edit__pubDate {
   width: 100%;
 }
