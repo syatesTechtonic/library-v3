@@ -1,15 +1,15 @@
-function createCover (id, title, imgSrc) {
-  const cover = document.createElement('img');
-  let coverSrc = imgSrc || 'assets/images/covers/no-cover.png';
-  cover.id = id + '-cover';
-  cover.classList.add('bk-info__cover');
-  cover.src = coverSrc;
-  cover.alt = title;
-  $(cover).bind("click", (e) => {
+function createCover (id, title, cover) {
+  const coverImg = document.createElement('img');
+  let coverSrc = cover || 'assets/images/covers/no-cover.png';
+  coverImg.id = id + '-cover';
+  coverImg.classList.add('bk-info__cover');
+  coverImg.src = coverSrc;
+  coverImg.alt = title;
+  $(coverImg).bind("click", (e) => {
     e.preventDefault();
     console.log(coverSrc);
   });
-  return cover;
+  return coverImg;
 }
 
 function createRating (id, rating) {
@@ -36,8 +36,8 @@ function createRating (id, rating) {
   return ratingDiv;
 }
 
-function createCoverAndRating (id, title, imgSrc, rating) {
-  const coverImg = createCover(id, title, imgSrc);
+function createCoverAndRating (id, title, cover, rating) {
+  const coverImg = createCover(id, title, cover);
   const ratingDiv = createRating(id, rating);
   const coverRatingDiv = document.createElement('div');
   coverRatingDiv.classList.add('bk-info__cover-rating');

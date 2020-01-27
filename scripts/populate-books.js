@@ -1,4 +1,3 @@
-import books from './books.js';
 import makeBook from './make-book.js'
 import toggleEditBook from './forms/edit.js'
 
@@ -22,7 +21,6 @@ function turnThePage (change) {
 function populateBooks (bookArray) {
   const { page, perPage } = pagination;
   const { start, end } = paginate(page, perPage);
-  console.log(start, end);
   document.getElementById('bkTableBody').innerHTML = bookArray.slice(start, end).map(book => makeBook(book)).join('');
   bookArray.map(book => attachDisplayHandlers(book.id));
   document.getElementById('bookSearch').reset();

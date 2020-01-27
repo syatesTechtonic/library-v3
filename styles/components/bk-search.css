@@ -9,6 +9,22 @@
   justify-content: center;
 }
 
+.bk-search__down {
+
+}
+
+.bk-search__down--disabled {
+  
+}
+
+.bk-search__up {
+
+}
+
+.bk-search__up--disabled {
+
+}
+
 .bk-search__form {
   display: flex;
   flex-direction: column;

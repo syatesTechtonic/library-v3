@@ -4,7 +4,7 @@ import createCoverAndRating from './stars.js'
 
 function toggleEditBook (id) {
   const bookToEdit = books.find(book => book.id === id);
-  const { author, title, imgSrc, pubDate, pages, synopsis, rating } = bookToEdit;
+  const { author, title, cover, pubDate, pages, synopsis, rating } = bookToEdit;
   const formDisplay = document.createElement('form');
   formDisplay.id = id + '-form';
   formDisplay.classList.add('js-bk-form');
@@ -36,7 +36,7 @@ function toggleEditBook (id) {
   const readDisplay = document.getElementById(id + '-book');
   readDisplay.replaceWith(formDisplay);
   attachEditHandlers(id);
-  const coverAndRating = createCoverAndRating(id, title, imgSrc, rating);
+  const coverAndRating = createCoverAndRating(id, title, cover, rating);
   const info = document.getElementById(id + '-info');
   info.prepend(coverAndRating);
 }
