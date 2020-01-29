@@ -5,7 +5,7 @@ function checkBook (input, book) {
   return input.title && book.title.toLowerCase().includes(input.title.toLowerCase()) || input.author && book.author.toLowerCase().includes(input.author.toLowerCase());
 }
 
-function bookSearch () {
+function bindSearch () {
   $('#bookSearch').submit(e => {
     e.preventDefault();
     const input = {
@@ -23,4 +23,4 @@ function bookSearch () {
   })
 }
 
-export default bookSearch;
+export default bindSearch;

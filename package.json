@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/syatesTechtonic/library-v3#readme",
   "dependencies": {
+    "express": "^4.17.1",
     "http-server": "^0.12.1"
   }
 }

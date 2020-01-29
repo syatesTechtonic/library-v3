@@ -1,39 +1,52 @@
-import books from './books.js';
 import Book from './book.js';
 import Observable from './observable.js';
-import BookShelf from './bookshelf.js'
-import bookSearch from './forms/search.js';
-import toggleAddBook from './forms/add.js';
-import populateBooks from './populate-books.js';
+import BookTable from './booktable.js';
 
 const observable = new Observable();
-const bookShelf = new BookShelf(observable);
+const bookTable = new BookTable(observable);
 
-$(document).ready(() => {
-  books.map(book => {
-    new Book(observable, book);
-  });
-  console.log(bookShelf.books);
-  populateBooks(bookShelf.books);
+export default class Engine {
+  constructor(observable) {
+    this.observable = observable;
+    this.getData();
+    this.bindListeners();
+  }
 
-  bookSearch();
-  bindShowAll();
-  bindAddBook();
-});
+  getData() {
+    const data = fetch('./scripts/books.json', {
+      headers: {
+        'Content-type': 'application/json'
+      }
+    })
+    .then(res => res.json())
+    .then(res => res.map(book => new Book(this.observable, book)))
+    .catch(err => console.error(err));
+  }
 
-function bindShowAll () {
-  $('#showAllBooks').bind('click', (e) => {
-    e.preventDefault();
-    $('#bkTableBody').children().remove();
-    populateBooks(books);
-    return;
-  })
+  bindListeners() {
+    document.getElementById('addBook').addEventListener('click', () => {
+      console.log('add book');
+      return;
+    });
+    document.getElementById('pageDown').addEventListener('click', () => {
+      bookTable.pageDown();
+      return;
+    });
+    document.getElementById('pageUp').addEventListener('click', () => {
+      bookTable.pageUp(bookTable.books.length);
+      return;
+    });
+    document.getElementById('showAllBooks').addEventListener('click', () => {
+      console.log('show all books');
+      return;
+    });
+    document.getElementById('bookSearchSubmit').addEventListener('click', (e) => {
+      e.preventDefault();
+      console.log('search for book');
+      return;
+    });
+  }
+  
 }
 
-function bindAddBook () {
-  $('#addBook').bind('click', (e) => {
-    e.preventDefault();
-    toggleAddBook();
-    return;
-  })
-}
+const engine = new Engine(observable);

@@ -60,15 +60,4 @@ function attachDisplayHandlers (id) {
   });
 }
 
-$('#pageDown').bind('click', (e) => {
-  e.preventDefault();
-  turnThePage(-1);
-  return;
-})
-$('#pageUp').bind('click', (e) => {
-  e.preventDefault();
-  turnThePage(1);
-  return;
-})
-
 export default populateBooks;
